@@ -20,11 +20,15 @@ connectToDatabase()
 
 
         setInterval(async () => {
-          let parkingGridList = await getParkingGridFromGov();
+          try {
+            let parkingGridList = await getParkingGridFromGov();
 
-          collections.parkingGridCollection?.insertMany(parkingGridList).then(() =>{
-            console.log(`Update at `, new Date());
-          });
+            collections.parkingGridCollection?.insertMany(parkingGridList).then(() =>{
+              console.log(`Update at `, new Date());
+            });
+          } catch (err) {
+            console.log(`發生了點錯誤 {err}`, new Date());
+          }
         }, 1000 * 60 * 3) // 3 分鐘更新一次
 
     })
